@@ -1,0 +1,143 @@
+:root {
+  --link-color: #0078d4;
+  --header-bg: #f8f9fa;
+  --footer-bg: #f1f1f1;
+  --max-width: 900px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+header {
+  background: var(--header-bg);
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+header h1 { font-size: 2.2rem; margin-bottom: 8px; }
+header p { font-size: 1rem; color: #555; }
+nav { margin-top: 12px; }
+nav a { margin: 0 12px; font-weight: 500; }
+
+main {
+  max-width: var(--max-width);
+  margin: 30px auto;
+  padding: 0 16px;
+}
+section {
+  margin-bottom: 40px;
+}
+section h2 {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+}
+
+ul { list-style: disc inside; }
+
+.team-member {
+  margin-bottom: 8px;
+}
+.team-role {
+  font-size: 0.9rem;
+  color: #777;
+  margin-left: 6px;
+}
+
+pre {
+  background: #f3f3f3;
+  padding: 12px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+code { font-family: Menlo, monospace; }
+
+footer {
+  background: var(--footer-bg);
+  text-align: center;
+  padding: 14px 0;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+}
+
+@media (max-width: 600px) {
+  header h1 { font-size: 1.8rem; }
+  nav { display: flex; flex-direction: column; align-items: center; }
+  nav a { margin: 6px 0; }
+}
+
+/* Main grid layout for the Examples section */
+.video-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+  margin-top: 2rem;
+}
+
+/* Each video+caption card */
+.video-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
+  padding: 0 0.5em;
+}
+
+/* Aspect ratio wrapper for consistent sizing */
+.video-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Video itself scaled nicely without cropping */
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+
+/* Caption text below each video */
+.video-caption {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 0.5em;
+  color: #444;
+  line-height: 1.4;
+}
+
+.video-code {
+  background-color: #f5f5f5;       /* light grey block */
+  padding: 0.8em 1em;              /* space inside */
+  border-radius: 6px;              /* rounded corners */
+  font-family: monospace;          /* code font */
+  font-size: 0.9em;                /* readable size */
+  line-height: 1.4;
+  overflow-x: auto;                /* scroll if too wide */
+  margin-top: 0.5em;
+  max-width: 100%;                 /* responsive */
+  white-space: pre-wrap;           /* wrap lines if needed */
+}
+
+/* Optional responsiveness tweak for very small screens */
+@media (max-width: 480px) {
+  .video-container {
+    max-width: 100%;
+  }
+}
+
+
+

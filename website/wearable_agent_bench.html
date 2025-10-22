@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WAGIBench • Wearable Agent Goal Inference Benchmark for Assistive Wearable Agents</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* You can move these into your style.css */
+    .author-list {
+      text-align: center;
+      margin-top: 0.5em;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .author-list span {
+      display: inline-block;
+      margin: 0 0.5em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>WAGIBench</h1>
+    <p>Wearable Agent Goal Inference Benchmark for Assistive Wearable Agents</p>
+    <div class="author-list">
+      <span><a href="https://vijayvee.github.io/">Vijay Veerabadran</a><sup>*</sup></span>
+      <span><a href="https://scholar.google.com/citations?hl=en&user=cuqP0dYAAAAJ&view_op=list_works&sortby=pubdate">Fanyi Xiao</a><sup>†</sup></span>
+      <span><a href="https://nitinkamra1992.github.io/">Nitin Kamra</a><sup>*</sup></span>
+      <span><a href="https://pmatias.xyz/">Pedro Matias</a><sup>*</sup></span>
+      <span><a href="https://www.linkedin.com/in/qiongjoychen/">Joy Chen</a><sup>†</sup></span>
+      <span><a href="https://www.linkedin.com/in/caley-drooff-088027121/">Caley Drooff</a><sup>†</sup></span>
+      <span><a href="https://www.linkedin.com/in/brett-roads-78498717/">Brett D Roads</a><sup>*</sup></span><br>
+      <span><a href="https://www.linkedin.com/in/rileyjwilliams/">Riley Williams</a><sup>*</sup></span>
+      <span><a href="https://www.linkedin.com/in/ethan--henderson/">Ethan Henderson</a><sup>*</sup></span>
+      <span><a href="https://www.linkedin.com/in/xuanyi-fidel-zhao/?locale=en_US">Xuanyi Zhao</a><sup>†</sup></span>
+      <span><a href="https://kevintcarlberg.net/">Kevin Carlberg</a><sup>*</sup></span>
+      <span><a href="https://jovapo.github.io/">Joseph Tighe</a><sup>†</sup></span>
+      <span><a href="https://www.linkedin.com/in/karl-ridgeway-5a662634/">Karl Ridgeway</a><sup>*</sup></span><br>
+      <span><sup>*</sup>Meta Reality Labs Research, <sup>†</sup>Meta FAIR</span>
+    </div>
+    <nav>
+      <a href="#abstract">Abstract</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#results">Examples</a>
+      <a href="#links">Resources</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="abstract">
+      <h2>Abstract</h2>
+      <p>There has been a surge of interest in assistive wearable agents: agents embodied in wearable form factors (e.g., smart glasses) who take assistive actions toward a user's goal/query (e.g. "Where did I leave my keys?"). In this work, we consider the important complementary problem of inferring that goal from multi-modal contextual observations. Solving this "goal inference" problem holds the promise of eliminating the effort needed to interact with such an agent. This work focuses on creating a strong benchmark to measure progress in solving this problem using vision-language models (VLMs). Given the limited prior work in this area, we collected a novel dataset comprising 29 hours of multimodal data from 348 participants across 3477 recordings, featuring ground-truth goals alongside accompanying visual, audio, digital, and longitudinal contextual observations. We validate that human performance exceeds model performance, achieving 93% multiple-choice accuracy compared with 84% for the best-performing VLM. Generative benchmark results that evaluate several families of modern vision-language models show that larger models perform significantly better on the task, yet remain far from practical usefulness, as they produce relevant goals only 55% of the time. Through a modality ablation, we show that models benefit from extra information in relevant modalities with minimal performance degradation from irrelevant modalities.</p>
+    </section>
+
+    <section id="benchmark">
+      <h2>Benchmark</h2>
+      <img src="assets/modality.png" alt="Benchmark modality visualization" style="max-width: 100%; height: auto; width: 800px; display: block; margin: 1em auto 0.5em;" />
+      <p style="text-align: center; font-style: italic; color: #666; margin-top: 0.5em; margin-bottom: 2em;">Three multi-modal samples from the benchmark. In the top row, the video and digital contexts are relevant to the prediction problem, and audio/longitudinal are noise. In the middle row, video and audio are relevant. In the bottom row, the video, audio, and longitudinal contexts are relevant.</p>
+
+      <img src="assets/subsets_generative.png" alt="Modality ablation" style="max-width: 100%; height: auto; width: 800px; display: block; margin: 1em auto 0.5em;" />
+      <p style="text-align: center; font-style: italic; color: #666; margin-top: 0.5em; margin-bottom: 2em;">1) Performance improves with model size in our scaling law experiments. 2) Multi-modal context (e.g. Vision+Audio) strengthens performance. 3) Large models suffer less interference from mixed modalities, better disentangle relevant features.</p>
+
+      <img src="assets/llm_judge.png" alt="LLM Judge for generative evals" style="max-width: 100%; height: auto; width: 800px; display: block; margin: 1em auto 0.5em;" />
+      <p style="text-align: center; font-style: italic; color: #666; margin-top: 0.5em; margin-bottom: 2em;">1) LLM-Judges with access to the reference goal best align with human raters. 2) The Judge model parameterized with both reference and script cues best aligns with human judgment (76.8%).</p>
+    </section>
+
+    <section id="results">
+      <h2>Examples</h2>
+      <div class="video-row">
+        <div class="video-container">
+          <h3 style="text-align: center; margin-bottom: 0.5em; font-size: 1.1rem;">Prediction with Vision modality</h3>
+          <div class="video-wrapper">
+            <video controls src="./assets/784effaa-cfc8-43cd-9e5b-0147f682c71e.mp4"></video>
+          </div>
+          <p class="video-caption"></p>
+          <pre class="video-code">
+<code><strong>Reference Goal</strong>:
+{
+  "type": "search",
+  "source": "world",
+  "query": "tutorials for",
+  "query_item": "Rubik's cube"
+}
+
+<strong>Predicted Goal</strong>:
+{
+  "type": "search",
+  "source": "world",
+  "query": "Rubik's Cube",
+  "query_item": "solution"
+}
+
+<strong>Explanation</strong>: Model's prediction matches well to the reference goal of searching for the Rubik's Cube solution</code>
+          </pre>
+        </div>
+        <!--
+        <div class="video-container">
+          <h3 style="text-align: center; margin-bottom: 0.5em; font-size: 1.1rem;">Prediction with Audio-Vision modality</h3>
+          <div class="video-wrapper">
+            <video controls src="./assets/c7913209-7e4f-4716-9310-ca8e75e523f9.mp4"></video>
+          </div>
+          <p class="video-caption"></p>
+          <pre class="video-code">
+<code><strong>Reference Goal</strong>:
+{
+  "type": "search",
+  "source": "world",
+  "query": "find",
+  "query_item": "rent in local area"
+}
+
+<strong>Predicted Goal</strong>:
+{
+  "type": "search",
+  "source": "world",
+  "query_item": "two-bedroom apartment rent prices",
+  "query": "average cost and availability"
+}
+
+<strong>Explanation</strong>: Model predicted a plausible goal that's more granular compared to the reference goal</code>
+          </pre>
+        </div>
+        -->
+        <div class="video-container">
+          <h3 style="text-align: center; margin-bottom: 0.5em; font-size: 1.1rem;">Prediction with Audio-Vision modality</h3>
+          <div class="video-wrapper">
+            <video controls src="./assets/eb6617ab-fe75-4960-9d3a-c9ee83b45be2.mp4"></video>
+          </div>
+          <p class="video-caption"></p>
+          <pre class="video-code">
+<code><strong>Reference Goal</strong>:
+{
+  "type": "search",
+  "source": "world",
+  "query": "find",
+  "query_item": "chiropractor"
+}
+
+<strong>Predicted Goal</strong>:
+{
+  "type": "search",
+  "source": "world",
+  "query_item": "chiropractor near me",
+  "query": "appointment availability"
+}
+
+<strong>Explanation</strong>: The model predicted correct goal with vision+audio inputs, whereas if only supplied with the video (no audio), it incorrectly predicts "share basketball moment with friends"</code>
+          </pre>
+        </div>
+      </div>
+
+
+
+      <div class="video-row">
+        <div class="video-container">
+          <h3 style="text-align: center; margin-bottom: 0.5em; font-size: 1.1rem;">Prediction with Vision-Digital modality</h3>
+          <div class="video-wrapper">
+            <video controls src="./assets/ae60725e-9da5-4700-a1c3-efddbf567db4.mp4"></video>
+          </div>
+          <p class="video-caption"></p>
+          <pre class="video-code">
+<code><strong>Reference Goal</strong>:
+{
+  "type": "search",
+  "source": "world",
+  "query": "nearby movie times for",
+  "query_item": "inside out 2"
+}
+
+<strong>Digital Contexts</strong>:
+{
+  'Calendar': {'title': 'Cinema Evening with Caleb Hall', 'start_datetime': '2025-04-23 18:00', 'end_datetime': '2025-04-23 21:00', 'location': 'Landmark Theatres, 911 Pine St, Seattle, WA 98101'}
+  ...
+}
+
+<strong>Predicted Goal</strong>:
+{
+  "type": "search",
+  "source": "world",
+  "query_item": "Inside Out 2",
+  "query": "showtimes and ticket availability"
+}
+
+<strong>Explanation</strong>: The model predicted correct goal with vision+digital cues, whereas it fails if only supplied with the video (no audio) inputs</code>
+          </pre>
+        </div>
+        <div class="video-container">
+          <h3 style="text-align: center; margin-bottom: 0.5em; font-size: 1.1rem;">Prediction with Vision-Longitudinal modality</h3>
+          <div class="video-wrapper">
+            <video controls src="./assets/b810d35d-7cc5-4fc3-814c-20550a0e81fe.mp4"></video>
+          </div>
+          <p class="video-caption"></p>
+          <pre class="video-code">
+<code><strong>Reference Goal</strong>:
+{
+  "type": "guided_activity",
+  "content": "white noise",
+  "time": "0:01:48"
+}
+
+<strong>Longitudinal Contexts</strong>:
+{
+  Context: The video captures a serene bedtime routine. The person adjusts the bedding and prepares for sleep. The lamp casts a warm glow, highlighting the room's cozy ambiance. The person wears a watch, indicating their presence in the scene.
+  Action: {'type':'guided_activity', 'content': 'white noise', 'time': '0:02:06'}
+  ...
+}
+
+<strong>Predicted Goal</strong>:
+{
+  "type": "guided_activity",
+  "content": "relaxation exercise",
+  "time": "15 minutes"
+}
+
+<strong>Explanation</strong>: The model combines longitudinal user history and visual observations to accurately predict the goal.</code>
+          </pre>
+        </div>
+      </div>
+
+
+    </section>
+
+
+    <!-- Removed the "Team" section entirely -->
+
+    <section id="links">
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="https://openreview.net/pdf?id=REG4cJItSZ">📄 Paper</a></li>
+        <li><a href="https://github.com/facebookresearch/WAGIBench">💻 Code</a></li>
+        <li><a href="https://dl.fbaipublicfiles.com/WAGIBench">📊 Dataset</a></li>
+        <li><a href="./assets/WAGIBench_FAIR.pdf">🪧 Poster</a></li>
+      </ul>
+    </section>
+
+    <section id="bibtex">
+      <h2>BibTeX</h2>
+      <pre><code>@inproceedings{wagibench2025,
+  author    = {Veerabadran, Vijay and Xiao, Fanyi and Kamra, Nitin and Matias, Pedro and Chen, Joy and Drooff, Caley and Roads, Brett and Williams, Riley J and Henderson, Ethan and Zhao, Xuanyi and Carlberg, Kevin and Tighe, Joseph and Ridgeway, Karl},
+  title     = {Benchmarking Egocentric Multimodal Goal Inference for Assistive Wearable Agents},
+  booktitle = {Proceedings of The Thirty-Ninth Annual Conference on Neural Information Processing Systems (NeurIPS 2025)},
+  year      = {2025},
+}</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Meta · WAGIBench
+  </footer>
+</body>
+</html>
