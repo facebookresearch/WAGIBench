@@ -90,7 +90,7 @@ pytz==2025.1
 PyYAML==6.0.2
 qwen-vl-utils==0.0.10
 regex==2024.11.6
-requests==2.32.3
+requests==2.33.0
 rich==14.0.0
 safetensors==0.5.2
 scikit-image==0.24.0
