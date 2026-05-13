@@ -121,7 +121,7 @@ typing==3.7.4.3
 typing-inspection==0.4.0
 typing_extensions==4.12.2
 tzdata==2025.1
-ujson==5.10.0
+ujson==5.12.1
 urllib3==2.6.0
 vrs==1.2.1
 xformers==0.0.29.post3
