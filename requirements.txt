@@ -76,7 +76,7 @@ platformdirs==4.3.7
 pooch==1.8.2
 portalocker==3.1.1
 psutil==7.0.0
-pyarrow==19.0.1
+pyarrow==23.0.1
 pycparser==2.22
 pycryptodomex==3.22.0
 pydantic==2.11.3
